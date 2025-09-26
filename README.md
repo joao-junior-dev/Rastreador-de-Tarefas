@@ -1,0 +1,2 @@
+# Rastreador de Tarefas
+O rastreador de tarefas é um projeto usado para rastrear e gerenciar suas tarefas. Nesta tarefa, você criará uma interface de linha de comando (CLI) simples para rastrear o que precisa fazer, o que fez e no que está trabalhando no momento. Este projeto ajudará você a praticar suas habilidades de programação, incluindo trabalhar com o sistema de arquivos, lidar com entradas do usuário e criar um aplicativo CLI simples.
