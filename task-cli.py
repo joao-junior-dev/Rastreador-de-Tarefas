@@ -1,7 +1,31 @@
+import json
 import sys
+import os
+from datetime import datetime
 
+
+def ler_dados():
+    ARQUIVO = 'tarefas.json'
+    if os.path.exists(ARQUIVO):
+        with open(ARQUIVO, 'r') as arq:
+            return json.load(arq)
+    return {"contador_id": 0, "tarefas": []}
+
+
+def carrega_dados(tarefa):
+    ARQUIVO = 'tarefas.json'
+    tarefas = ler_dados()
+    tarefas["contador_id"] += 1
+    tarefas["tarefas"].append({"id": tarefas["contador_id"],
+                               "tarefa": tarefa,
+                               "status": "ToDo",
+                               "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                               "updatedAt": None})
+    with open(ARQUIVO, 'w') as arq:
+        json.dump(tarefas, arq)
+        
 def add_task(task):
-    pass
+    print('task adicionada')
 
 
 def update_task(id_task, name_task, description_task):
@@ -47,3 +71,5 @@ if __name__ == '__main__':
         list_tasks_failed()
     elif sys.argv[1] == 'list' and sys.argv[2] == 'in_progress':
         list_task_in_progress()
+
+
