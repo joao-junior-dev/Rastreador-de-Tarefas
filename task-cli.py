@@ -51,18 +51,19 @@ def deletar_tarefa(id_tarefa):
 
     tarefas = ler_dados()
     for indice, tarefa in enumerate(tarefas["tarefas"]):
-        # print(indice, tarefa)
 
         if tarefa["id"] == id_tarefa:
             del tarefas["tarefas"][indice]
 
     carrega_dados(tarefas)
 
+def listar_tarefas():
+    """Lista todos os tarefas"""
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        print(tarefa)
 
-
-
-def list_tasks():
-    pass
+listar_tarefas()
 
 def list_tasks_done():
     pass
