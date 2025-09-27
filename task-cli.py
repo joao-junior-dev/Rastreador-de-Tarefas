@@ -12,8 +12,14 @@ def ler_dados():
     return {"contador_id": 0, "tarefas": []}
 
 
-def carrega_dados(tarefa):
+def carrega_dados(tarefas):
     ARQUIVO = 'tarefas.json'
+
+    with open(ARQUIVO, 'w') as arq:
+        json.dump(tarefas, arq)
+
+
+def adiciona_tarefa(tarefa):
     tarefas = ler_dados()
     tarefas["contador_id"] += 1
     tarefas["tarefas"].append({"id": tarefas["contador_id"],
@@ -21,11 +27,7 @@ def carrega_dados(tarefa):
                                "status": "ToDo",
                                "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                                "updatedAt": None})
-    with open(ARQUIVO, 'w') as arq:
-        json.dump(tarefas, arq)
-        
-def add_task(task):
-    print('task adicionada')
+    carrega_dados(tarefas)
 
 
 def update_task(id_task, name_task, description_task):
