@@ -1,10 +1,11 @@
 import json
-import sys
 import os
 from datetime import datetime
 
 
 def ler_dados():
+    """devolve um objeto {} com um contador int e uma lista de tarefas []"""
+
     ARQUIVO = 'tarefas.json'
     if os.path.exists(ARQUIVO):
         with open(ARQUIVO, 'r') as arq:
@@ -13,13 +14,17 @@ def ler_dados():
 
 
 def carrega_dados(tarefas):
+    """Serializa um objeto python em um arquivo .json no diretório local"""
+
     ARQUIVO = 'tarefas.json'
 
     with open(ARQUIVO, 'w') as arq:
         json.dump(tarefas, arq)
 
 
-def adiciona_tarefa(tarefa):
+def adicionar_tarefa(tarefa):
+    """Adiciona uma tarefa na nossa lista de tarefas dentro di nosso arquivo .json local"""
+
     tarefas = ler_dados()
     tarefas["contador_id"] += 1
     tarefas["tarefas"].append({"id": tarefas["contador_id"],
@@ -31,6 +36,8 @@ def adiciona_tarefa(tarefa):
 
 
 def atualizar_tarefa(id, nova_tarefa):
+    """Altera o nome de uma tarefa passando o id e o novo nome da tarefa"""
+
     tarefas = ler_dados()
     for tarefa in tarefas["tarefas"]:
         if tarefa["id"] == id:
@@ -38,8 +45,21 @@ def atualizar_tarefa(id, nova_tarefa):
             tarefa["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     carrega_dados(tarefas)
 
-def delete_task(task):
-    pass
+
+def deletar_tarefa(id_tarefa):
+    """Exclui uma tarefa do nosso arquivo .json local passando o id como para função"""
+
+    tarefas = ler_dados()
+    for indice, tarefa in enumerate(tarefas["tarefas"]):
+        # print(indice, tarefa)
+
+        if tarefa["id"] == id_tarefa:
+            del tarefas["tarefas"][indice]
+
+    carrega_dados(tarefas)
+
+
+
 
 def list_tasks():
     pass
@@ -53,12 +73,14 @@ def list_tasks_failed():
 def set_task_in_progress(id_task):
     pass
 
-def task_done(id_task):
+def set_task_done(id_task):
     pass
 
 def list_task_in_progress():
     pass
 
+
+""" TODO
 if __name__ == '__main__':
     if sys.argv[1] == 'add':
         add_task(sys.argv[2])
@@ -79,4 +101,4 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'list' and sys.argv[2] == 'in_progress':
         list_task_in_progress()
 
-
+"""
