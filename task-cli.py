@@ -30,8 +30,13 @@ def adiciona_tarefa(tarefa):
     carrega_dados(tarefas)
 
 
-def update_task(id_task, name_task, description_task):
-    pass
+def atualizar_tarefa(id, nova_tarefa):
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        if tarefa["id"] == id:
+            tarefa["tarefa"] = nova_tarefa
+            tarefa["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    carrega_dados(tarefas)
 
 def delete_task(task):
     pass
