@@ -63,6 +63,24 @@ def listar_tarefas():
     for tarefa in tarefas["tarefas"]:
         print(tarefa)
 
+def set_tarefa_concluida(id):
+    """Altera o status de uma tarefa para concluída"""
+
+    tarefas = ler_dados()
+    for indice, tarefa in enumerate(tarefas["tarefas"]):
+        if tarefa["id"] == id:
+            tarefas["tarefas"][indice]["status"] = "concluida"
+    carrega_dados(tarefas)
+
+def listar_tarefas_concluidas():
+    """Lista todos os tarefas concluidas"""
+
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        if tarefa["status"] == "concluida":
+            print(tarefa)
+
+set_tarefa_concluida(9)
 listar_tarefas()
 
 def list_tasks_done():
