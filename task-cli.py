@@ -57,20 +57,20 @@ def deletar_tarefa(id_tarefa):
 
     carrega_dados(tarefas)
 
-def listar_tarefas():
-    """Lista todos os tarefas"""
-    tarefas = ler_dados()
-    for tarefa in tarefas["tarefas"]:
-        print(tarefa)
-
-def set_tarefa_concluida(id):
+def set_tarefa_concluida_ou_andamento(id, concluida_ou_andamento):
     """Altera o status de uma tarefa para concluída"""
 
     tarefas = ler_dados()
     for indice, tarefa in enumerate(tarefas["tarefas"]):
         if tarefa["id"] == id:
-            tarefas["tarefas"][indice]["status"] = "concluida"
+            tarefas["tarefas"][indice]["status"] = concluida_ou_andamento
     carrega_dados(tarefas)
+
+def listar_tarefas():
+    """Lista todos os tarefas"""
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        print(tarefa)
 
 def listar_tarefas_concluidas():
     """Lista todos os tarefas concluidas"""
@@ -80,26 +80,28 @@ def listar_tarefas_concluidas():
         if tarefa["status"] == "concluida":
             print(tarefa)
 
-set_tarefa_concluida(9)
-listar_tarefas()
+def listar_tarefas_a_fazer():
+    """Lista todos os tarefas todo (a fazer)"""
 
-def list_tasks_done():
-    pass
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        if tarefa["status"] == "ToDo":
+            print(tarefa)
 
-def list_tasks_failed():
-    pass
+def listar_tarefas_em_andamento():
+    """Lista todas as tarefas em andamento"""
 
-def set_task_in_progress(id_task):
-    pass
-
-def set_task_done(id_task):
-    pass
-
-def list_task_in_progress():
-    pass
+    tarefas = ler_dados()
+    for tarefa in tarefas["tarefas"]:
+        if tarefa["status"] == "andamento":
+            print(tarefa)
 
 
-""" TODO
+
+
+
+
+""" TODO: cli
 if __name__ == '__main__':
     if sys.argv[1] == 'add':
         add_task(sys.argv[2])
