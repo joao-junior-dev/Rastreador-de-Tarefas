@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+import argparse
 
 
 def ler_dados():
@@ -33,6 +34,7 @@ def adicionar_tarefa(tarefa):
                                "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                                "updatedAt": None})
     carrega_dados(tarefas)
+    return tarefas["contador_id"]
 
 
 def atualizar_tarefa(id, nova_tarefa):
@@ -44,6 +46,8 @@ def atualizar_tarefa(id, nova_tarefa):
             tarefa["tarefa"] = nova_tarefa
             tarefa["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     carrega_dados(tarefas)
+
+
 
 
 def deletar_tarefa(id_tarefa):
@@ -66,60 +70,70 @@ def set_tarefa_concluida_ou_andamento(id, concluida_ou_andamento):
             tarefas["tarefas"][indice]["status"] = concluida_ou_andamento
     carrega_dados(tarefas)
 
-def listar_tarefas():
+def listar_tarefas(status):
     """Lista todos os tarefas"""
-    tarefas = ler_dados()
-    for tarefa in tarefas["tarefas"]:
-        print(tarefa)
-
-def listar_tarefas_concluidas():
-    """Lista todos os tarefas concluidas"""
 
     tarefas = ler_dados()
-    for tarefa in tarefas["tarefas"]:
-        if tarefa["status"] == "concluida":
+    if status == 'all':
+        for tarefa in tarefas["tarefas"]:
             print(tarefa)
-
-def listar_tarefas_a_fazer():
-    """Lista todos os tarefas todo (a fazer)"""
-
-    tarefas = ler_dados()
-    for tarefa in tarefas["tarefas"]:
-        if tarefa["status"] == "ToDo":
-            print(tarefa)
-
-def listar_tarefas_em_andamento():
-    """Lista todas as tarefas em andamento"""
-
-    tarefas = ler_dados()
-    for tarefa in tarefas["tarefas"]:
-        if tarefa["status"] == "andamento":
-            print(tarefa)
+    elif status == 'concluida':
+        for tarefa in tarefas["tarefas"]:
+            if tarefa["status"] == "concluida":
+                print(tarefa)
+    elif status == "ToDo":
+        for tarefa in tarefas["tarefas"]:
+            if tarefa["status"] == "ToDo":
+                print(tarefa)
+    elif status == "andamento":
+        for tarefa in tarefas["tarefas"]:
+            if tarefa["status"] == "andamento":
+                print(tarefa)
 
 
+def main():
+    parser = argparse.ArgumentParser(prog="task-cli", description="Task manager cli")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # Adicionar
+    add_parser = subparsers.add_parser("add")
+    add_parser.add_argument("task", help="Nome da tarefa")
+
+    # Atualizar
+    update_parser = subparsers.add_parser("update")
+    update_parser.add_argument("id", type=int, help="Id da tarefa")
+    update_parser.add_argument("nova_tarefa", help="Nova tarefa")
+
+    # Deletar
+    delete_parser = subparsers.add_parser("delete")
+    delete_parser.add_argument("id_tarefa", help="Id da tarefa")
+
+    # Setar em andamento
+    mark_done_parser = subparsers.add_parser("mark_done")
+    mark_done_parser.add_argument("id_tarefa", help="Id da tarefa")
+    mark_done_parser.add_argument("done-or-progress", help="Marque como 'andamento' ou 'concluida'")
+
+    # Listar tarefas
+    list_parser = subparsers.add_parser("list")
+    list_parser.add_argument("status", nargs="?", choices=["all", "done", "todo", "in-progress"])
+
+    args = parser.parse_args()
+
+    if args.command == "add":
+        id_tarefa = adicionar_tarefa(args.task)
+        print(f"Output: Task added successfully (ID: {id_tarefa})")
+    elif args.command == "update":
+        atualizar_tarefa(args.id, args.nova_tarefa)
+        print(f"Output: Task updated successfully (ID: {args.id} - {args.nova_tarefa})")
+    elif args.command == "delete":
+        deletar_tarefa(args.id_tarefa)
+        print(f"Output: Task deleted successfully (ID: {args.id_tarefa})")
+    elif args.command == "mark-done":
+        set_tarefa_concluida_ou_andamento(args.id_tarefa, args.done_or_progress)
+        print(f'Output: Task mark done successfully (ID: {args.id_tarefa} - {args.done_or_progress})')
+    elif args.command == "list":
+        listar_tarefas(args.status)
 
 
-
-
-""" TODO: cli
-if __name__ == '__main__':
-    if sys.argv[1] == 'add':
-        add_task(sys.argv[2])
-    elif sys.argv[1] == 'update':
-        update_task(sys.argv[2], sys.argv[3], sys.argv[4])
-    elif sys.argv[1] == 'delete':
-        delete_task(sys.argv[2])
-    elif sys.argv[1] == 'mark-in-progress':
-        set_task_in_progress(sys.argv[2])
-    elif sys.argv[1] == 'mark-in-done':
-        task_done(sys.argv[2])
-    elif sys.argv[1] == 'list':
-        list_tasks()
-    elif sys.argv[1] == 'list' and sys.argv[2] == 'done':
-        list_tasks_done()
-    elif sys.argv[1] == 'list' and sys.argv[2] == 'failed':
-        list_tasks_failed()
-    elif sys.argv[1] == 'list' and sys.argv[2] == 'in_progress':
-        list_task_in_progress()
-
-"""
+if __name__ == "__main__":
+    main()
