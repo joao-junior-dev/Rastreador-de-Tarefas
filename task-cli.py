@@ -48,8 +48,6 @@ def atualizar_tarefa(id, nova_tarefa):
     carrega_dados(tarefas)
 
 
-
-
 def deletar_tarefa(id_tarefa):
     """Exclui uma tarefa do nosso arquivo .json local passando o id como para função"""
 
@@ -76,19 +74,29 @@ def listar_tarefas(status):
     tarefas = ler_dados()
     if status == 'all':
         for tarefa in tarefas["tarefas"]:
-            print(tarefa)
-    elif status == 'concluida':
+            print(f"""
+            ID: {tarefa["id"]} | Tarefa: {tarefa["tarefa"]} | Status: {tarefa["status"]} | Criado: {tarefa["createdAt"]} | Atualizado: {tarefa["updatedAt"]}
+            {'-' * 100}""", end='')
+    elif status == 'done':
         for tarefa in tarefas["tarefas"]:
             if tarefa["status"] == "concluida":
-                print(tarefa)
-    elif status == "ToDo":
+                print(f"""
+            ID: {tarefa["id"]} | Tarefa: {tarefa["tarefa"]} | Status: {tarefa["status"]} | Criado: {tarefa["createdAt"]} | Atualizado: {tarefa["updatedAt"]}
+            {'-' * 100}""", end='')
+    elif status == "todo":
         for tarefa in tarefas["tarefas"]:
             if tarefa["status"] == "ToDo":
-                print(tarefa)
-    elif status == "andamento":
+                print(f"""
+            ID: {tarefa["id"]} | Tarefa: {tarefa["tarefa"]} | Status: {tarefa["status"]} | Criado: {tarefa["createdAt"]} | Atualizado: {tarefa["updatedAt"]}
+            {'-' * 100}""", end='')
+    elif status == "in-progress":
         for tarefa in tarefas["tarefas"]:
             if tarefa["status"] == "andamento":
-                print(tarefa)
+                print(f"""
+            ID: {tarefa["id"]} | Tarefa: {tarefa["tarefa"]} | Status: {tarefa["status"]} | Criado: {tarefa["createdAt"]} | Atualizado: {tarefa["updatedAt"]}
+            {'-' * 100}""", end='')
+
+
 
 
 def main():
@@ -106,16 +114,16 @@ def main():
 
     # Deletar
     delete_parser = subparsers.add_parser("delete")
-    delete_parser.add_argument("id_tarefa", help="Id da tarefa")
+    delete_parser.add_argument("id_tarefa", type=int, help="Id da tarefa")
 
     # Setar em andamento
-    mark_done_parser = subparsers.add_parser("mark_done")
-    mark_done_parser.add_argument("id_tarefa", help="Id da tarefa")
-    mark_done_parser.add_argument("done-or-progress", help="Marque como 'andamento' ou 'concluida'")
+    mark_done_parser = subparsers.add_parser("mark-done")
+    mark_done_parser.add_argument("id_tarefa", type=int, help="Id da tarefa")
+    mark_done_parser.add_argument("done_or_progress", help="Marque como 'andamento' ou 'concluida'")
 
     # Listar tarefas
     list_parser = subparsers.add_parser("list")
-    list_parser.add_argument("status", nargs="?", choices=["all", "done", "todo", "in-progress"])
+    list_parser.add_argument("status", help="Opções: all, done, todo, in-progress")
 
     args = parser.parse_args()
 
