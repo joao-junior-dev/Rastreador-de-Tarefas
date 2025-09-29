@@ -1,6 +1,6 @@
 Desafio da comunidade: https://roadmap.sh/projects/task-tracker
 
-📝<h1>Task CLI</h1>
+<h1>📝Task CLI</h1>
 
 Um simples gerenciador de tarefas em linha de comando feito em Python.
 Com ele, você pode adicionar, atualizar, marcar como concluída e remover tarefas direto do terminal.
