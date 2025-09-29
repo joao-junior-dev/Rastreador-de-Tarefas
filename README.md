@@ -20,7 +20,7 @@ O aplicativo deve ser executado a partir da <strong>linha de comando</strong>, a
 
 <li>Listar todas as tarefas que estão em andamento</li>
 </ul>
-<h3>Um exemplo de uso é apresentado abaixo: </h3>
+Aqui estão algumas restrições para orientar a implementação:
 <ul>
   <li>Você pode usar qualquer linguagem de programação para construir este projeto.</li>
   <li>Use argumentos posicionais na linha de comando para aceitar entradas do usuário.</li>
@@ -31,9 +31,7 @@ O aplicativo deve ser executado a partir da <strong>linha de comando</strong>, a
   <li>Certifique-se de lidar com erros e casos extremos normalmente.</li>
 </ul>
 
-<h3>Exemplo</h3>h3>
-A lista de comandos e seu uso é fornecida abaixo:
-
+<h3>A lista de comandos e seu uso é fornecida abaixo:</h3>
 
 https://github.com/user-attachments/assets/1ed30bdb-58f9-443c-8ec1-e9af9bbad97d
 
