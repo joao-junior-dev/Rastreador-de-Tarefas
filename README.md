@@ -33,7 +33,10 @@ O aplicativo deve ser executado a partir da <strong>linha de comando</strong>, a
 
 <h3>Exemplo</h3>h3>
 A lista de comandos e seu uso é fornecida abaixo:
-<img width="752" height="455" alt="exemplo-de-uso" src="https://github.com/user-attachments/assets/43dd9f09-a7ba-4777-acb5-8f512caff85d" />
+
+
+https://github.com/user-attachments/assets/1ed30bdb-58f9-443c-8ec1-e9af9bbad97d
+
 
 <h3>Como usar</h3>
 <h4>1º Clone este repositório: https://github.com/joao-junior-dev/Rastreador-de-Tarefas#</h4>
